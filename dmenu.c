@@ -349,19 +349,25 @@ keypress(XKeyEvent *ev)
 		case XK_e: ksym = XK_End;       break;
 		case XK_f: ksym = XK_Right;     break;
 		case XK_g: ksym = XK_Escape;    break;
-		case XK_h: ksym = XK_BackSpace; break;
+		//case XK_h: ksym = XK_BackSpace; break;
 		case XK_i: ksym = XK_Tab;       break;
-		case XK_j: /* fallthrough */
+		//case XK_j: /* fallthrough */
+		
+		case XK_h: ksym = XK_Up; break;
+		case XK_k: ksym = XK_Up; break;
+		case XK_l: ksym = XK_Down; break;
+		case XK_j: ksym = XK_Down; break;
+
 		case XK_J: /* fallthrough */
 		case XK_m: /* fallthrough */
 		case XK_M: ksym = XK_Return; ev->state &= ~ControlMask; break;
 		case XK_n: ksym = XK_Down;      break;
 		case XK_p: ksym = XK_Up;        break;
 
-		case XK_k: /* delete right */
-			text[cursor] = '\0';
-			match();
-			break;
+		/* case XK_k: /1* delete right *1/ */
+		/* 	text[cursor] = '\0'; */
+		/* 	match(); */
+		/* 	break; */
 		case XK_u: /* delete left */
 			insert(NULL, 0 - cursor);
 			break;
@@ -507,6 +513,7 @@ insert:
 		if (lines > 0)
 			return;
 		/* fallthrough */
+	case XK_Tab:
 	case XK_Down:
 	case XK_KP_Down:
 		if (sel && sel->right && (sel = sel->right) == next) {
@@ -514,14 +521,13 @@ insert:
 			calcoffsets();
 		}
 		break;
-	case XK_Tab:
-		if (!sel)
-			return;
-		cursor = strnlen(sel->text, sizeof text - 1);
-		memcpy(text, sel->text, cursor);
-		text[cursor] = '\0';
-		match();
-		break;
+		/* if (!sel) */
+		/* 	return; */
+		/* cursor = strnlen(sel->text, sizeof text - 1); */
+		/* memcpy(text, sel->text, cursor); */
+		/* text[cursor] = '\0'; */
+		/* match(); */
+		/* break; */
 	}
 
 draw:
